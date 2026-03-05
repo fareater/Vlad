@@ -1,0 +1,31 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#define MATRIX 5
+int main() {
+    char *word = malloc(100 * sizeof(char));  // выделяем 100 байт
+    if (word == NULL) {
+        printf("Ошибка выделения памяти\n");
+        return 1;
+    }
+    printf("Введите пароль: ");
+    scanf("%99s", word);  // читаем не более 99 символов
+    char password[] = "meow";
+    char *p1 = password;
+    char *p2 = word;
+    while (*p1 != '\0' && *p2 != '\0') {
+        if (*p1 == *p2) {
+            p1++;
+            ++p2;
+        } else {
+            break;
+        }
+    }
+    if (*p1 == '\0' && *p2 == '\0') {
+        printf("пароли совпадают");
+    }else {
+        printf("пароли не совпадают");
+    }
+    free(word);
+    return 0;
+}
