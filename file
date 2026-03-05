@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#define MATRIX 5
+int main() {
+    /*char str[] = "Pointer"; // task 1
+    char *ptr = str;
+    int k = 0;
+    while (*ptr != '\0') {
+        k++;
+        ++ptr;
+    }
+    printf("%d\n", k);*/
+
+    /*char s[] = "Abrakadabra";// task 2
+    char *ptr2 = s;
+    char rtt;
+    scanf("%c", &rtt);
+    for (int i = 0 ;i < sizeof(s)/sizeof(*s) - 1; i++) {
+        if (*(ptr2 + i) == rtt) {
+            printf("Нашел на позиции: %d\n",i);
+        } else {
+            printf("Такой буквы нет");
+            break;
+        }
+    }*/
+    char word[] = "level";
+    char *left = word;
+    char *right = word + 4;
+    char tmp;
+    while (left < right) {
+        tmp = *left;
+        *left = *right;// крч мы присваем букву блять от right
+        *right = tmp;
+        left++;// а тут двигаем номер по памяти ,то есть передвигаемся на букву на номер памяти +1
+        right--;
+    }
+    printf("%s\n", word);
+}
