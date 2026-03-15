@@ -1,0 +1,39 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <time.h>
+#include <math.h>
+/*Задание 12. Написать функцию, которая принимает массив вещественных чисел и
+удаляет из него все элементы, которые меньше среднего арифметического
+элементов массива.*/
+int main() {
+    int n = 30;
+    double roots[n];
+    double sum = 0;
+    srand(time(NULL));
+    double arifm  = 0;
+    for (int i = 0; i < n ; i++) {
+        sum = rand() % 10000;
+        roots[i] = pow(sum,1.0/n);
+        printf("%.2lf ",roots[i]);
+        arifm += roots[i];
+    }
+    printf("\n");
+    arifm /= n;
+    printf("%.2lf\n",arifm);
+    for (int i = 0; i < n ; ) {
+        if (roots[i] < arifm) {
+            for (int j = i; j < n - 1; j++) {
+                roots[j] = roots[j + 1];
+            }
+            n--;
+        } else{
+            ++i;
+        }
+    }
+    printf("\n");
+    for (int i = 0; i < n; i++) {
+        printf("%.2lf ",roots[i]);
+    }
+    return 0;
+}
