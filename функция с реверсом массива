@@ -1,0 +1,26 @@
+ #include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+void reverse(int t[],int ty) {
+    for (int i = 0 ;i < (ty/2) ;i++  ) {
+        int tmp = t[i];
+        t[i] = t[ty - i - 1];// идем с конца вычитаем с каждым i++ и делая -1 чтобы за границу - 1
+        t[ty - i - 1] = tmp;
+        }
+    }
+int main(void){
+    int arri[20];
+    int *ar = &arri[0];
+    int ty = sizeof(arri) / sizeof(arri[0]);
+    srand(time(NULL));
+    for(int i = 0 ;i<20;i++) {
+        arri[i] = rand ()%1000;
+        printf("%d ",*(ar + i));
+    }
+    printf("\n");
+    reverse(arri,ty);
+    for(int i = 0 ;i<20;i++) {
+        printf("%d ",*(ar + i));
+    }
+    return 0;
+}
