@@ -1,0 +1,68 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+typedef struct  {
+    int **data;
+}Nert;
+
+int max(int a,int b) {return (a>b);}
+int min(int a,int b) {return (a<b);}
+
+void sort(Nert *t, int rows, int cols, int (*operator)(int,int)) {
+    // 1. Цикл по каждой строке
+    for (int r = 0; r < rows; r++) {
+        for (int i = 0; i < cols - 1; i++) {
+            for (int j = 0; j < cols - 1 - i; j++) {
+                if (operator(t->data[r][j], t->data[r][j+1])) {
+                    int temp = t->data[r][j];
+                    t->data[r][j] = t->data[r][j + 1];
+                    t->data[r][j + 1] = temp;
+                }
+            }
+        }
+    }
+}
+
+void ket(Nert *t ,int i,int j) {
+    srand(time(NULL));
+    for (int y = 0; y < i; y++) {
+        for (int x = 0; x < j; x++) {
+            t -> data[y][x] = rand() % 100;
+        }
+    }
+}
+
+void Free(Nert *t ,int i ){
+    for (int y = 0; y < i; y++) {
+        free(t -> data[y]);
+    }
+    free(t -> data);
+}
+
+void memory(Nert *t ,int i,int j) {
+    t -> data = (int**)malloc(sizeof(int*)*i);
+    for (int y = 0; y < i; y++) {
+        t -> data[y] = (int*)malloc(sizeof(int)*j);
+    }
+}
+
+void print(Nert *t ,int i,int j) {
+    for (int y = 0; y < i; y++) {
+        for (int x = 0; x < j; x++) {
+            printf("%d ",t -> data[y][x]);
+        }
+    }
+}
+
+int main(void) {
+    Nert tt;
+    int i,j;
+    printf("Введите количетсво строк и столбцов:\n");
+    scanf("%d %d",&i,&j);
+    memory(&tt,i,j);
+    ket(&tt,i,j);
+    sort(&tt,j,i,max);
+    print(&tt,i,j);
+    Free(&tt,i);
+    return 0;
+}
