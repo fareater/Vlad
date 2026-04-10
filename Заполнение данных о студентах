@@ -1,0 +1,59 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+typedef struct {
+    char *name;
+    double grade;
+}student;
+
+typedef struct {
+    student *list;
+    int count;
+}Group;
+
+void addmemory(Group *group) {
+    group->count++;
+
+    student* temp = (student*) realloc(group->list, sizeof(student) * group->count);
+    if (!temp) return; // Проверка, если память кончилась
+    group->list = temp;
+    char name[100];
+    printf("Введите имя студента №%d: ", group->count);
+    // ПРОБЕЛ перед %99s игнорирует старые Enter и пробелы
+    scanf(" %99s", name);
+
+    group->list[group->count - 1].name = (char*) malloc(strlen(name) + 1);
+    strcpy(group->list[group->count - 1].name, name);
+
+    printf("Введите оценку: ");
+    scanf("%lf", &group->list[group->count - 1].grade);
+}
+
+void Free(Group *group) {
+    for (int i = 0;i < group->count ;i++) {
+        free(group -> list[i].name);
+    }
+    free(group -> list);
+}
+void printgroup(Group *group) {
+    for (int i = 0;i < group->count ;i++) {
+        printf("%s\t%.2f\n", group -> list[i].name, group -> list[i].grade);
+    }
+}
+
+int main(void) {
+    Group group;
+    group.count = 0;
+    group.list = NULL;
+    int k;
+    printf("Введите количество студентов:\n");
+    scanf("%d",&k);
+
+    for (int i = 0;i < k;i++) {
+        addmemory(&group);
+    }
+
+    printgroup(&group);
+    Free (&group);
+    return 0;
+}
